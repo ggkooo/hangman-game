@@ -1,6 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 
+void opening() {
+	printf("-+-----------------+-\n");
+	printf(" |  Jogo da Forca  | \n");
+	printf("-+-----------------+-\n\n");
+}
+
+void kickCapture(char kicks[26], int attempt) {
+	char kick;
+	scanf(" %c", &kick);
+
+	kicks[attempt] = kick;
+}
+
 int main() {
 	char secretWord[20];
 
@@ -12,6 +25,8 @@ int main() {
 
 	char kicks[26];
 	int attempt = 0;
+
+	opening();
 
 	do {
 		for (int i = 0; i < strlen(secretWord); i++) {
@@ -31,11 +46,8 @@ int main() {
 			}
 		}
 		printf("\n");
-
-		char kick;
-		scanf(" %c", &kick);
-
-		kicks[attempt] = kick;
 		attempt++;
+
+		kickCapture(kicks, attempt);
 	} while (!finish && !hanged);
 }
