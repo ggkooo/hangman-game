@@ -5,3 +5,5 @@ void draw();
 void selectWord();
 int hanged();
 int win();
+void selectWord();
+void addWord();
