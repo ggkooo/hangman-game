@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include "game.h"
 
 // GLOVAL VARIABLES
 char secretWord[20];
@@ -47,8 +50,58 @@ void draw() {
 }
 
 void selectWord() {
-	// SPRINTF é a função para colocar uma 'string' dentro de um ARRAY
-	sprintf(secretWord, "Giordano");
+	FILE* file;
+	file = fopen("words.txt", "r");
+
+	if (file == 0) {
+		printf("Desculpe, banco de dados nao disponivel.\n\n");
+		exit(1);
+	}
+
+	int quantityWords;
+	fscanf(file, "%d", &quantityWords);
+
+	srand(time(0));
+	int random = rand() % quantityWords;
+
+	for (int i = 0; i <= random; i++) {
+		fscanf(file, "%s", secretWord);
+	}
+
+	fclose(file);
+}
+
+void addWord() {
+	char opc;
+
+	printf("Voce deseja inserir alguma palavra? (Y/N)");
+	scanf(" %c", &opc);
+
+	if (opc == 'Y') {
+		char newWord[20];
+		printf("Qual e a nova palavra? ");
+		scanf("%s", newWord);
+
+		FILE* file;
+		file = fopen("words.txt", "r+");
+
+		if (file == 0) {
+			printf("Desculpe, banco de dados nao disponivel.\n\n");
+			exit(1);
+		}
+
+		int quantity;
+		fscanf(file, "%d", &quantity);
+		quantity++;
+
+		fseek(file, 0, SEEK_SET);
+		fprintf(file, "%d", quantity);
+
+		fseek(file, 0, SEEK_END);
+		fprintf(file, "\n%s", newWord);
+
+		fclose(file);
+	}
 }
 
 int hanged() {
@@ -87,4 +140,5 @@ int main() {
 		draw();
 		kickCapture();
 	} while (!win() && !hanged());
+	addWord();
 }
