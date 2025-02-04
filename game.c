@@ -4,7 +4,7 @@
 // GLOVAL VARIABLES
 char secretWord[20];
 char kicks[26];
-int attempt = 0;
+int kickGiven = 0;
 
 void opening() {
 	printf("-+-----------------+-\n");
@@ -16,14 +16,14 @@ void kickCapture() {
 	char kick;
 	scanf(" %c", &kick);
 
-	kicks[attempt] = kick;
-	attempt++;
+	kicks[kickGiven] = kick;
+	kickGiven++;
 }
 
 int alreadyKicked(char word) {
 	int find = 0;
 
-	for (int j = 0; j < attempt; j++) {
+	for (int j = 0; j < kickGiven; j++) {
 		if (kicks[j] == word) {
 			find = 1;
 			break;
@@ -51,17 +51,40 @@ void selectWord() {
 	sprintf(secretWord, "Giordano");
 }
 
-int main() {
-	int finish = 0;
-	int hanged = 0;
+int hanged() {
+	int errors = 0;
+	for (int i = 0; i < kickGiven; i++) {
+		int exists = 0;
+		for (int j = 0; j < strlen(secretWord); j++) {
+			if (kicks[i] == secretWord[j]) {
+				exists = 1;
+				break;
+			}
+		}
 
+		if (!exists) {
+			errors++;
+		}
+	}
+
+	return errors >= 5;
+}
+
+int win() {
+	for (int i = 0; i < strlen(secretWord); i++) {
+		if(!alreadyKicked(secretWord[i])) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int main() {
 	selectWord();
 	opening();
 
 	do {
 		draw();
-
 		kickCapture();
-
-	} while (!finish && !hanged);
+	} while (!win() && !hanged());
 }
