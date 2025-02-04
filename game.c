@@ -4,8 +4,10 @@
 #include <time.h>
 #include "game.h"
 
+#define WORD_LENGTH 20
+
 // GLOVAL VARIABLES
-char secretWord[20];
+char secretWord[WORD_LENGTH];
 char kicks[26];
 int kickGiven = 0;
 
@@ -78,7 +80,7 @@ void addWord() {
 	scanf(" %c", &opc);
 
 	if (opc == 'Y') {
-		char newWord[20];
+		char newWord[WORD_LENGTH];
 		printf("Qual e a nova palavra? ");
 		scanf("%s", newWord);
 
@@ -140,5 +142,41 @@ int main() {
 		draw();
 		kickCapture();
 	} while (!win() && !hanged());
+
+	if (win()) {
+		printf("\nParabéns, você ganhou!\n\n");
+
+        printf("       ___________      \n");
+        printf("      '._==_==_=_.'     \n");
+        printf("      .-\\:      /-.    \n");
+        printf("     | (|:.     |) |    \n");
+        printf("      '-|:.     |-'     \n");
+        printf("        \\::.    /      \n");
+        printf("         '::. .'        \n");
+        printf("           ) (          \n");
+        printf("         _.' '._        \n");
+        printf("        '-------'       \n\n");
+	} else {
+		printf("\nPuxa, você foi enforcado!\n");
+        printf("A palavra era **%s**\n\n", secretWord);
+
+        printf("    _______________         \n");
+        printf("   /               \\       \n"); 
+        printf("  /                 \\      \n");
+        printf("//                   \\/\\  \n");
+        printf("\\|   XXXX     XXXX   | /   \n");
+        printf(" |   XXXX     XXXX   |/     \n");
+        printf(" |   XXX       XXX   |      \n");
+        printf(" |                   |      \n");
+        printf(" \\__      XXX      __/     \n");
+        printf("   |\\     XXX     /|       \n");
+        printf("   | |           | |        \n");
+        printf("   | I I I I I I I |        \n");
+        printf("   |  I I I I I I  |        \n");
+        printf("   \\_             _/       \n");
+        printf("     \\_         _/         \n");
+        printf("       \\_______/           \n");
+	}
+
 	addWord();
 }
