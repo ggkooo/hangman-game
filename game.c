@@ -7,11 +7,12 @@ void opening() {
 	printf("-+-----------------+-\n\n");
 }
 
-void kickCapture(char kicks[26], int attempt) {
+void kickCapture(char kicks[26], int* attempt) {
 	char kick;
 	scanf(" %c", &kick);
 
-	kicks[attempt] = kick;
+	kicks[(*attempt)] = kick;
+	(*attempt)++;
 }
 
 int main() {
@@ -46,8 +47,8 @@ int main() {
 			}
 		}
 		printf("\n");
-		attempt++;
 
-		kickCapture(kicks, attempt);
+		kickCapture(kicks, &attempt);
+
 	} while (!finish && !hanged);
 }
