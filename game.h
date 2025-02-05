@@ -7,3 +7,4 @@ int hanged();
 int win();
 void selectWord();
 void addWord();
+int wrongKicks();

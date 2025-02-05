@@ -39,6 +39,17 @@ int alreadyKicked(char word) {
 }
 
 void draw() {
+	int errors = wrongKicks();
+	printf("  _______       \n");
+    printf(" |/      |      \n");
+    printf(" |      %c%c%c  \n", (errors>=1?'(':' '), (errors>=1?'_':' '), (errors>=1?')':' '));
+    printf(" |      %c%c%c  \n", (errors>=3?'\\':' '), (errors>=2?'|':' '), (errors>=3?'/': ' '));
+    printf(" |       %c     \n", (errors>=2?'|':' '));
+    printf(" |      %c %c   \n", (errors>=4?'/':' '), (errors>=4?'\\':' '));
+    printf(" |              \n");
+    printf("_|___           \n");
+    printf("\n\n");
+
 	for (int i = 0; i < strlen(secretWord); i++) {
 		int find = alreadyKicked(secretWord[i]);
 
@@ -106,7 +117,7 @@ void addWord() {
 	}
 }
 
-int hanged() {
+int wrongKicks() {
 	int errors = 0;
 	for (int i = 0; i < kickGiven; i++) {
 		int exists = 0;
@@ -121,8 +132,11 @@ int hanged() {
 			errors++;
 		}
 	}
+	return errors;
+}
 
-	return errors >= 5;
+int hanged() {
+	return wrongKicks() >= 5;
 }
 
 int win() {
@@ -144,7 +158,7 @@ int main() {
 	} while (!win() && !hanged());
 
 	if (win()) {
-		printf("\nParabéns, você ganhou!\n\n");
+		printf("\nParabens, voce ganhou!\n\n");
 
         printf("       ___________      \n");
         printf("      '._==_==_=_.'     \n");
@@ -157,7 +171,7 @@ int main() {
         printf("         _.' '._        \n");
         printf("        '-------'       \n\n");
 	} else {
-		printf("\nPuxa, você foi enforcado!\n");
+		printf("\nPuxa, voce foi enforcado!\n");
         printf("A palavra era **%s**\n\n", secretWord);
 
         printf("    _______________         \n");
